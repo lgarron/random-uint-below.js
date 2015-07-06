@@ -149,6 +149,19 @@ check(
   "Called this often instead: " + getGRVCounter()
 );
 
+var counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+for (var i = 0; i < counts.length * 100; i++) {
+  counts[randomInt.below(10)] += 1;
+}
+for (var i = 0; i < counts.length; i++) {
+  check(
+    "Distribution bucket #" + i,
+    (counts[i] > 50),
+    "" + counts[i] + " > 50",
+    "Frequency too low: " + counts[i]
+  );
+}
+
 
 /*
  * TODO:
