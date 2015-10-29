@@ -60,7 +60,10 @@ var randomInt = function() {
     }
   }
 
-  var cryptoObject_ = window.crypto || window.msCrypto || window.cryptoUint32;
+  var cryptoObject_;
+       if (typeof crypto   !== "undefined") { cryptoObject_ = crypto;   }
+  else if (typeof msCrypto !== "undefined") { cryptoObject_ = msCrypto; }
+  else                                      { cryptoObject_ = null;     }
 
   if (cryptoObject_) {
     random53BitValue_ = function() {
