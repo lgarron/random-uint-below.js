@@ -53,9 +53,11 @@ var randomInt = function() {
   var random53BitValue_;
 
   function enableInsecureMathRandomFallback() {
-    var warningString = "WARNING: randomInt is falling back to Math.random for random number generation."
-    console.warn ? console.warn(warningString) : console.log(warningString);
-    allowMathRandomFallback_ = true;
+    if (!cryptoObject_) {
+      var warningString = "WARNING: randomInt is falling back to Math.random for random number generation."
+      console.warn ? console.warn(warningString) : console.log(warningString);
+      allowMathRandomFallback_ = true;
+    }
   }
 
   var cryptoObject_ = window.crypto || window.msCrypto || window.cryptoUint32;
