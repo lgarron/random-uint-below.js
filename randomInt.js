@@ -2,14 +2,14 @@
 
 // Compatibility shim to work both in browers and node.js
 // Based on on https://gist.github.com/rpflorence/1198466
-(function (name, definition){
+(function (globalObject, name, definition){
   if (typeof module !== "undefined" && module.exports) { // Node.js
-    module.exports = definition(true, require("crypto"));
+    module.exports = (definition.bind(globalObject))(true, require("crypto"));
   } else { // Browser
     // Pass null for getRandomValues so that the main code can calculate the IE fallback even when run on its own.
-    window[name] = definition(false, null);
+    globalObject[name] = (definition.bind(globalObject))(false, null);
   }
-})("randomInt", function (isNode, crypto) {
+})(window || this, "randomInt", function (isNode, crypto) {
 
 if (isNode) {
   window = {
@@ -47,7 +47,7 @@ if (isNode) {
  * randomInt.below(max) returns a random non-negative integer less than max (0 <= output < max).
  * `max` must be at most 2^53.
  */
-var randomInt = function() {
+var randomInt = (function() {
   var MAX_JS_PRECISE_INT = 9007199254740992;
   var allowMathRandomFallback_ = false;
   var random53BitValue_;
@@ -61,9 +61,9 @@ var randomInt = function() {
   }
 
   var cryptoObject_;
-       if (typeof crypto   !== "undefined") { cryptoObject_ = crypto;   }
-  else if (typeof msCrypto !== "undefined") { cryptoObject_ = msCrypto; }
-  else                                      { cryptoObject_ = null;     }
+       if (typeof this.crypto   !== "undefined") { cryptoObject_ = this.crypto;   }
+  else if (typeof this.msCrypto !== "undefined") { cryptoObject_ = this.msCrypto; }
+  else                                           { cryptoObject_ = null;          }
 
   if (cryptoObject_) {
     random53BitValue_ = function() {
@@ -116,7 +116,7 @@ var randomInt = function() {
     below: below,
     enableInsecureMathRandomFallback: enableInsecureMathRandomFallback
   };
-}();
+}.bind(this))();
 
 
 
