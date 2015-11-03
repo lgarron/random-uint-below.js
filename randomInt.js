@@ -65,20 +65,26 @@ var randomInt = (function() {
   else if (typeof this.msCrypto !== "undefined") { cryptoObject_ = this.msCrypto; }
   else                                           { cryptoObject_ = null;          }
 
+  var UPPER_HALF_MULTIPLIER = 2097152; // 2^21. We have to use multiplication because bit shifts truncate to 32 bits.
+  var LOWER_HALF_DIVIDER = 2048;
   if (cryptoObject_) {
     random53BitValue_ = function() {
       // Construct a random 53-bit value from a 32-bit upper half and a 21-bit lower half.
-      var UPPER_HALF_MULTIPLIER = 2097152; // 2^21. We have to use multiplication because bit shifts truncate to 32 bits.
       var array = new Uint32Array(2);
       cryptoObject_.getRandomValues(array);
-      return (array[0] * UPPER_HALF_MULTIPLIER) + (array[1] >> 21);
+      var upper = array[0];
+      var lower = array[1];
+      return Math.floor(upper * UPPER_HALF_MULTIPLIER) + Math.floor(lower / LOWER_HALF_DIVIDER);
     }
   } else {
     var warningString = "ERROR: randomInt could not find a suitable crypto.getRandomValues() function."
     console.error ? console.error(warningString) : console.log(warningString);
     random53BitValue_ = function() {
       if (allowMathRandomFallback_) {
-        return Math.floor(Math.random() * MAX_JS_PRECISE_INT)
+        var TWO_TO_THE_32 = 4294967296; // We're assuming Math.random() has 32 bits of entropy on all platforms.
+        var upper = Math.floor(Math.random() * TWO_TO_THE_32);
+        var lower = Math.floor(Math.random() * TWO_TO_THE_32);
+        return Math.floor(upper * UPPER_HALF_MULTIPLIER) + Math.floor(lower / LOWER_HALF_DIVIDER);
       } else {
         throw new Error("randomInt cannot get random values.");
       }

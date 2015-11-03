@@ -53,6 +53,9 @@ if (typeof module !== "undefined" && module.exports) { // Node.js
   };
 }
 
+// To test Math.random(), uncomment this line and make sure the code falls back
+// randomInt.enableInsecureMathRandomFallback();
+
 // Testing definitions
 
 MAX_JS_PRECISE_INT = 9007199254740992;
@@ -162,6 +165,20 @@ for (var i = 0; i < counts.length; i++) {
   );
 }
 
+function bitString(val, numDigits) {
+  var out = "";
+  for (var i = 0; i < numDigits; i++) {
+    out = "" + (val % 2) + out;
+    val = Math.floor(val / 2);
+  }
+  return out;
+}
+
+consoleLog("Make sure the following bit strings look healthy:");
+for (var i = 0; i < 10; i++) {
+  var val = randomInt.below(MAX_JS_PRECISE_INT);
+  consoleLog(bitString(val, 53));
+}
 
 /*
  * TODO:
