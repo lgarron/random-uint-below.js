@@ -1,4 +1,4 @@
-import {getRandomValues} from "./get-random-values";
+import { getRandomValues } from "./get-random-values";
 
 /*
  * randomInt.below(max) returns a random non-negative integer less than max (0 <= output < max).
@@ -11,12 +11,12 @@ var UPPER_HALF_MULTIPLIER = 2097152; // 2^21. We have to use multiplication beca
 var LOWER_HALF_DIVIDER = 2048;
 
 function random53BitValue(): number {
-    // Construct a random 53-bit value from a 32-bit upper half and a 21-bit lower half.
-    var arr = new Uint32Array(2);
-    getRandomValues(arr);
-    var upper = arr[0];
-    var lower = arr[1];
-    return Math.floor(upper * UPPER_HALF_MULTIPLIER) + Math.floor(lower / LOWER_HALF_DIVIDER);
+  // Construct a random 53-bit value from a 32-bit upper half and a 21-bit lower half.
+  var arr = new Uint32Array(2);
+  getRandomValues(arr);
+  var upper = arr[0];
+  var lower = arr[1];
+  return Math.floor(upper * UPPER_HALF_MULTIPLIER) + Math.floor(lower / LOWER_HALF_DIVIDER);
 }
 
 function validateMax(max: number): void {
@@ -35,8 +35,7 @@ export function randomUIntBelow(max: number): number {
   var maxUniformSamplingRange = Math.floor(MAX_JS_PRECISE_INT / max) * max;
 
   // Rejection sampling:
-  if (val < maxUniformSamplingRange)
-  {
+  if (val < maxUniformSamplingRange) {
     return val % max;
   }
   else {
