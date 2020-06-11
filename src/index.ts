@@ -1,3 +1,2 @@
-export {
-  randomUIntBelow
-} from "./random-int"
+export { randomChoice } from "./random-choice"
+export { randomUIntBelow } from "./random-int"
