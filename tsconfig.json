@@ -1,20 +1,14 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "es6",
-
-    "rootDir": "src",
-    "outDir": "",
+    "lib": [
+      "dom",
+      "es2020"
+    ],
     "declaration": true,
-    "sourceMap": true,
-
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/types",
   },
   "include": [
-    "src"
+    "src/random-uint-below/**/*"
   ]
 }

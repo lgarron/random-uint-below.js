@@ -1,7 +1,5 @@
 {
   "name": "random-uint-below",
-  "umdName": "randomUIntBelow",
-  "main": "./dist/random-uint-below.js",
   "version": "0.6.0",
   "description": "A library for generating random integers.",
   "author": "Lucas Garron <code@garron.net> (https://garron.net/)",
@@ -10,31 +8,32 @@
   "bugs": {
     "url": "https://github.com/lgarron/random-int-js/issues"
   },
-  "types": "./dist/index.d.ts",
-  "dependencies": {},
-  "externalsForWebpack": [
-    "crypto"
-  ],
-  "devDependencies": {
-    "@types/chai": "^4.2.11",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^10.17.26",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "ts-loader": "^4.5.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^2.9.2",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-notifier": "^1.8.0"
+  "type": "module",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./global": {
+      "import": "./dist/esm-global/index.js",
+      "types": "./dist/types/global.d.ts"
+    }
   },
   "scripts": {
-    "prepublishOnly": "make dist"
+    "build": "npm run build-types && npm run build-js",
+    "build-types": "npx tsc",
+    "build-js": "node script/build.js",
+    "dev": "node script/dev.js",
+    "clean": "rm -rf ./dist",
+    "prepack": "npm run clean && npm run build"
   },
-  "browser": {
-    "crypto": false
+  "engines": {
+    "node": ">=19"
   },
-  "node": {
-    "crypto": false
+  "devDependencies": {
+    "barely-a-dev-server": "^0.3.6",
+    "typescript": "^4.9.3"
   }
 }

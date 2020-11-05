@@ -1,21 +1,17 @@
-NODE_BIN = ./node_modules/.bin
+# This Makefile is a wrapper around the scripts from `package.json`.
+# https://github.com/lgarron/Makefile-scripts
 
-.PHONY: dist
-dist: clean-dist
-	env PROD=true ${NODE_BIN}/webpack-cli
+# Note: the first command becomes the default `make` target.
+NPM_COMMANDS = build build-types build-main build-module build-global dev clean prepack
 
-.PHONY: dev
-dev:
-	${NODE_BIN}/webpack-cli --watch
+.PHONY: $(NPM_COMMANDS)
+$(NPM_COMMANDS):
+	npm run $@
 
-.PHONY: test
-test:
-	${NODE_BIN}/mocha -r ts-node/register test/*.ts
-
-.PHONY: clean
-clean: clean-dist
-	rm -f yarn-error.log
-
-.PHONY: clean-dist
-clean-dist:
-	rm -rf ./dist
+# We write the npm commands to the top of the file above to make shell autocompletion work in more places.
+DYNAMIC_NPM_COMMANDS = $(shell node -e 'console.log(Object.keys(require("./package.json").scripts).join(" "))')
+UPDATE_MAKEFILE_SED_ARGS = "s/^NPM_COMMANDS = .*$$/NPM_COMMANDS = ${DYNAMIC_NPM_COMMANDS}/" Makefile
+.PHONY: update-Makefile
+update-Makefile:
+	if [ "$(shell uname -s)" = "Darwin" ] ; then sed -i "" ${UPDATE_MAKEFILE_SED_ARGS} ; fi
+	if [ "$(shell uname -s)" != "Darwin" ] ; then sed -i"" ${UPDATE_MAKEFILE_SED_ARGS} ; fi
