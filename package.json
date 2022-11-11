@@ -20,7 +20,7 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^10.17.26",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0",
+    "mocha": "^10.1.0",
     "ts-loader": "^4.5.0",
     "ts-node": "^7.0.1",
     "typescript": "^2.9.2",
