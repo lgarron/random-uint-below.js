@@ -23,7 +23,7 @@ console.log(randomChoice(["vanilla", "strawberry", "peppermint"]))
 
 `random-uint-below.js` requires `crypto.getRandomValues`, which is available in:
 
-- All major browsers since 2015: <https://caniuse.com/getrandomvalues>
+- All major browsers since 2014: <https://caniuse.com/getrandomvalues>
 - `bun` and `deno`
 - `node` without a flag since `v19`: <https://nodejs.org/api/webcrypto.html#cryptogetrandomvaluestypedarray>
   - Available in earlier versions with the `--experimental-global-webcrypto` flag.
