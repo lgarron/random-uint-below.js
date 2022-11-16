@@ -4,9 +4,9 @@
   "description": "A library for generating random integers.",
   "author": "Lucas Garron <code@garron.net> (https://garron.net/)",
   "license": "(MIT OR GPL-3.0-or-later)",
-  "repository": "github:lgarron/random-int-js",
+  "repository": "github:lgarron/random-uint-below.js",
   "bugs": {
-    "url": "https://github.com/lgarron/random-int-js/issues"
+    "url": "https://github.com/lgarron/random-uint-below.js/issues"
   },
   "type": "module",
   "module": "./dist/esm/index.js",
