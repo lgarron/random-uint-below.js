@@ -14,7 +14,9 @@ function crypto(): typeof globalThis.crypto {
   if (!crypto) {
     const { node: nodeVersion } = globalThis.process?.versions;
     if (nodeVersion && parseInt(nodeVersion.split(".")[0]) < 19) {
-      throw new Error("`cubing.js` requires `node` 19 or above.");
+      throw new Error(
+        "`node` 19 or above is required for randomization using `random-uint-below`",
+      );
     }
   }
   return crypto;
